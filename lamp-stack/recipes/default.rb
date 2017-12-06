@@ -5,6 +5,6 @@
 # Copyright:: 2017, The Authors, All Rights Reserved.
 
 execute "update-upgrade" do
-  command "apt-get update && apt-get upgrade -y"
+  command "apt-get update -y"
   action :run
 end
