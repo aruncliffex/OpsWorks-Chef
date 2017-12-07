@@ -11,4 +11,10 @@ file "Create a file" do
   owner "root"
   path "/var/www/html/create-directory-demo/index.html"
 end
-
+cookbook_file '/var/www/html/phpinfo.php' do
+  source 'phpinfo.php'
+  owner 'www-data:www-data'
+  group 'www-data:www-data'
+  mode '0755'
+  action :create
+end
