@@ -19,3 +19,9 @@ directory "/var/log/php" do
   action :create
   notifies :run, "execute[chownlog]"
 end
+
+execute "libapache2" do
+  command "apt-get libapache2-mod-php7.0 -y"
+  action :run
+end
+~     
