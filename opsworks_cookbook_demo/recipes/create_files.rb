@@ -13,8 +13,8 @@ file "Create a file" do
 end
 cookbook_file '/var/www/html/phpinfo.php' do
   source 'phpinfo.php'
-  owner 'www-data:www-data'
-  group 'www-data:www-data'
+  owner 'www-data'
+  group 'www-data'
   mode '0755'
   action :create
 end
