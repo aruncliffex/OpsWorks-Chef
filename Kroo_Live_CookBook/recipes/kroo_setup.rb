@@ -17,7 +17,7 @@ directory '/opt/Kroo' do
   action :create
 end
 cookbook_file '/var/www/html/api/' do
-  source '.htaccess'
+  source 'virtual_hosts/.htaccess'
   owner 'www-data'
   group 'www-data'
   mode '0755'

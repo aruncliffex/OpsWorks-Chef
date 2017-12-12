@@ -1,0 +1,113 @@
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews
+    </IfModule>
+
+    RewriteEngine On
+    RewriteBase /
+
+    RewriteRule (.*) $1 [E=STABLE_VERSION:1.6.5]
+
+   # Handle Version Redirection using Header
+
+ 
+    RewriteCond  %{REQUEST_URI} ^/1.6.3 
+    RewriteCond %{REQUEST_METHOD}  =GET 
+    RewriteRule ^(1.6.3)(.*)$ $1/public$2  [R=301,L] 
+
+    RewriteCond  %{REQUEST_URI} ^/1.6.3 
+    RewriteCond %{REQUEST_METHOD}  =POST 
+    RewriteRule ^(1.6.3)(.*)$ http://api.thekroo.com/$1/public$2  [P,R=301,L] 
+ 
+    RewriteCond  %{REQUEST_URI} ^/1.6.4 
+    RewriteCond %{REQUEST_METHOD}  =GET 
+    RewriteRule ^(1.6.4)(.*)$ $1/public$2  [R=301,L] 
+
+    RewriteCond  %{REQUEST_URI} ^/1.6.4 
+    RewriteCond %{REQUEST_METHOD}  =POST 
+    RewriteRule ^(1.6.4)(.*)$ http://api.thekroo.com/$1/public$2  [P,R=301,L] 
+ 
+    RewriteCond  %{REQUEST_URI} ^/1.6.5 
+    RewriteCond %{REQUEST_METHOD}  =GET 
+    RewriteRule ^(1.6.5)(.*)$ $1/public$2  [R=301,L] 
+
+    RewriteCond  %{REQUEST_URI} ^/1.6.5 
+    RewriteCond %{REQUEST_METHOD}  =POST 
+    RewriteRule ^(1.6.5)(.*)$ http://api.thekroo.com/$1/public$2  [P,R=301,L] 
+
+    RewriteCond  %{REQUEST_URI} ^/stripe_webhook
+    RewriteRule ^(.*)$ %{REQUEST_SCHEME}://api.thekroo.com/%{ENV:STABLE_VERSION}/public/$1  [P,R=301,L]
+
+    RewriteCond  %{REQUEST_URI} ^/ticketevolutioncallback
+    RewriteRule ^(.*)$ %{REQUEST_SCHEME}://api.thekroo.com/%{ENV:STABLE_VERSION}/public/$1  [P,R=301,L]
+
+    RewriteCond  %{REQUEST_URI} ^/game_score
+    RewriteRule ^(.*)$ %{REQUEST_SCHEME}://api.thekroo.com/%{ENV:STABLE_VERSION}/public/$1  [P,R=301,L]
+
+    RewriteCond %{REQUEST_URI} ^/$ 
+    RewriteRule ^$ http://thekroo.com [R=301,L]
+
+    RewriteCond %{HTTP:version} ^1.0$
+    RewriteCond  %{REQUEST_URI}  !^/[0-9]
+    RewriteRule ^(.*)$  http://api.thekroo.com/1.0/public/$1  [P,R=301,L]
+
+    RewriteCond %{HTTP:version} ^1.1$
+    RewriteCond  %{REQUEST_URI}  !^/[0-9]
+    RewriteRule ^(.*)$  http://api.thekroo.com/1.1/public/$1  [P,R=301,L]
+
+    RewriteCond %{HTTP:version} ^1.2$
+    RewriteCond  %{REQUEST_URI}  !^/[0-9]
+    RewriteRule ^(.*)$  http://api.thekroo.com/1.2/public/$1  [P,R=301,L]
+
+    RewriteCond %{HTTP:version} ^1.3$
+    RewriteCond  %{REQUEST_URI}  !^/[0-9]
+    RewriteRule ^(.*)$  http://api.thekroo.com/1.3/public/$1  [P,R=301,L]
+
+    RewriteCond %{HTTP:version} ^1.4$
+    RewriteCond  %{REQUEST_URI}  !^/[0-9]
+    RewriteRule ^(.*)$  http://api.thekroo.com/1.4/public/$1  [P,R=301,L]
+
+    RewriteCond %{HTTP:version} ^1.5$
+    RewriteCond  %{REQUEST_URI}  !^/[0-9]
+    RewriteRule ^(.*)$  http://api.thekroo.com/1.5/public/$1  [P,R=301,L]
+
+    RewriteCond %{HTTP:version} ^1.5.2$
+    RewriteCond  %{REQUEST_URI}  !^/[0-9]
+    RewriteRule ^(.*)$  http://api.thekroo.com/1.5.2/public/$1  [P,R=301,L]
+
+    RewriteCond %{HTTP:version} ^1.6$
+    RewriteCond  %{REQUEST_URI}  !^/[0-9]
+    RewriteRule ^(.*)$  http://api.thekroo.com/1.6/public/$1  [P,R=301,L]
+
+    RewriteCond %{HTTP:version} ^1.6.2$
+    RewriteCond  %{REQUEST_URI}  !^/[0-9]
+    RewriteRule ^(.*)$  http://api.thekroo.com/1.6.2/public/$1  [P,R=301,L]
+ 
+    RewriteCond  %{REQUEST_URI}  !^/[0-9]
+    RewriteCond %{REQUEST_METHOD}  =GET
+    RewriteRule ^(.*)$ /1.0/public/$1  [P,R=301,L]
+   
+    RewriteCond  %{REQUEST_URI}  !^/[0-9]
+    RewriteCond %{REQUEST_METHOD}  =POST
+    RewriteRule ^(.*)$ /1.0/public/$1  [P,R=301,L]
+
+
+
+ 
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)/$ /$1 [L,R=301]
+
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+
+    # Handle Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php 
+
+
+</IfModule>
+
