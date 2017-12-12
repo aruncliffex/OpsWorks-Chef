@@ -1,3 +1,6 @@
+service 'apache2' do
+  action :nothing
+end
 directory '/var/www/html/api/' do
   owner 'root'
   group 'root'
@@ -16,7 +19,19 @@ directory '/opt/Kroo' do
   mode '0755'
   action :create
 end
-cookbook_file '/var/www/html/api/' do
+execute "awscli" do
+  command "apt-get install awscli -y"
+  action :run
+end
+execute "kroo-live-env" do
+  command "aws s3 cp  s3://cliffex-db-backup/kroo-env-vars/kroo-live-env.ini  /opt/Kroo/env.ini"
+  action :run
+end
+execute "kroo-live-dotenv" do
+  command "aws s3 cp  s3://cliffex-db-backup/kroo-env-vars/kroo-live-dotenv.ini  /opt/Kroo/.env"
+  action :run
+end
+cookbook_file '/var/www/html/api/.htaccess' do
   source 'virtual_hosts/.htaccess'
   owner 'www-data'
   group 'www-data'
